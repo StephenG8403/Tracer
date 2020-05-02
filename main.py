@@ -1,7 +1,6 @@
 # This is the beginning of the program.
 
 import time
-import os
 import subprocess
 
 def logic():
@@ -21,25 +20,29 @@ def logic():
     time.sleep(1)
     testvalue = 0
     listelement = 0
-    while testvalue != whilevalue:
+    finalresults = []
+    while testvalue != 3:      # This loop contains the traceroute logic
         print(listelement)
         traceip = str(contents[listelement])
         print(traceip)
-        finalresults = []
-        trace = subprocess.Popen(['traceroute', 'google.com'])
-        result, error = trace.communicate()
-        print('////', result, '////')
-
-
+        trace = subprocess.Popen(['traceroute', 'google.com'], stdout=subprocess.PIPE)
+        result = trace.stdout.read()
+        result = str(result)
+        finalresults.append(result)
 
                 # While loop logic:
         listelement = listelement + 1
         testvalue = testvalue + 1
+    with open('destination.txt', 'w') as destination:
+        destination.write('\n'.join(finalresults))
+
+
+
 
 
 
 def main():
-    print('MAKE SURE THIS PROGRAM HAS BEEN RUN UNDER ADMINISTRATOR PRIVILEGES!')
+    print('MAKE SURE THIS PROGRAM HAS BEEN RUN UNDER ADMINISTRATOR OR ROOT PRIVILEGES!')
     time.sleep(3)
     print('Welcome to Tracer, have a .txt file ready in the destination of this program.')
     time.sleep(2)
@@ -54,7 +57,7 @@ def main():
     print('(This file should contain IPV4 addresses separated by a new line.)')
     time.sleep(2)
     print('2. When complete, copy or remove both your original file and the destination file.')
-    time.sleep(2)
+    time.sleep(3)
     def readycode():
         ready = input('Ready? (Yes or No)')
         if ready == 'Yes' or ready == 'yes':
