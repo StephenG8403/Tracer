@@ -2,7 +2,7 @@
 
 import time
 import os
-import ping,socket
+import subprocess
 
 def logic():
     print('Loading txt file now.')
@@ -15,21 +15,26 @@ def logic():
             print(element)
     time.sleep(2)
     print('Data loaded.')
-    number = contents.count() + 1
+    number = len(contents)  # For the while loop
+    whilevalue = number + 1     # For the while loop
     print('number of IP adresses detected:', number)
     time.sleep(1)
     testvalue = 0
-    while testvalue != number:
-        listelement = 0
+    listelement = 0
+    while testvalue != whilevalue:
+        print(listelement)
         traceip = str(contents[listelement])
         print(traceip)
-        try:
+        finalresults = []
+        trace = subprocess.Popen(['traceroute', 'google.com'])
+        result, error = trace.communicate()
+        print('////', result, '////')
 
 
 
-        # While loop logic:
-        listelement += 1
-        testvalue += 1
+                # While loop logic:
+        listelement = listelement + 1
+        testvalue = testvalue + 1
 
 
 
